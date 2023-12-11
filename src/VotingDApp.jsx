@@ -1,20 +1,26 @@
-import { Box, Divider, Flex, Heading, Spacer } from "@chakra-ui/react";
+import { Box, Divider, Flex, Heading, Progress, Spacer, Spinner, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import MetaMaskConnectorComponent from "./components/MetaMaskConnectorComponent";
-import OwnerToolsComponent from "./components/OwnerToolsComponent"
-import VoteComponent from "./components/VoteComponent"
-import VotingResultComponent from "./components/VotingResultComponent"
+import OwnerToolsComponent from "./components/OwnerToolsComponent";
+import VoteComponent from "./components/VoteComponent";
+import VotingResultComponent from "./components/VotingResultComponent";
+import Web3 from "web3";
+
+import votingDAppABI from "./contracts/VotingDAppABI.json";
 
 function VotingDApp() {
-  const votingDAppAddress = "0x2d6093a73546cb8a21a19227a1b7c9f1d3f81781";
+  const web3 = new Web3(window.ethereum);
+  const votingDAppAddress = "0xedf77d223e1dcfe7a2aae086da8aa229c33cb9b4";
+  const votingDAppOwnerAddress = "0x12287320fd25d88abce37fb524b54ca49b573726";
+
+  const votingDAppContract = new web3.eth.Contract(votingDAppABI, votingDAppAddress)
 
   const [walletAddress, setWalletAddress] = useState(null);
 
   const [isMetaMaskConnected, setMetaMaskConnected] = useState(false);
   const [isVotingStarted, setVotingStarted] = useState(false);
   const [isVotingFinished, setVotingFinished] = useState(false);
-  const [isOwnerConnected, setIsOwnerConnected] = useState(false);
-
+  const [isOwnerConnected, setOwnerConnected] = useState(false);
 
   const handleMetaMaskConnection = (address, connection) => {
     setWalletAddress(address);
@@ -35,13 +41,30 @@ function VotingDApp() {
       
       <Divider />
 
-      <Flex minWidth="max-content" alignItems="center" my="5" direction="column">
-        <OwnerToolsComponent />
-        <VoteComponent />
-        <Divider />
-        <VotingResultComponent />
-        <Divider />
-      </Flex>
+      {
+        isMetaMaskConnected ? (
+          <Flex minWidth="max-content" alignItems="center" my="5" direction="column">
+            {
+              walletAddress === votingDAppOwnerAddress ? (
+                <OwnerToolsComponent
+                  contract={votingDAppContract}
+                  fromAddress={walletAddress}
+                />
+              ) : (
+                <VoteComponent />
+              )
+            }
+            {/* <Divider /> */}
+            {/* <VotingResultComponent /> */}
+          </Flex>
+        ) : 
+        (
+          <Flex minWidth="max-content" my="5" direction="column">
+            <Progress size='lg' isIndeterminate />
+          </Flex>
+        )
+      }
+      
 
     </Flex>
     
