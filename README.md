@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Voting DApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A decentralized application to manage a voting process using smart contracts built with solidity and deployed on SepoliaETH network.
 
-## Available Scripts
+## Contract Addresses on SepoliaETH network
 
-In the project directory, you can run:
+- VotingDApp
+  - Address: 0x2bac136c8ad994c9aff906c4dfce459c999f6ab7
+  - Contract: https://sepolia.etherscan.io/address/0x2bac136c8ad994c9aff906c4dfce459c999f6ab7
+  - Deploy transaction: https://sepolia.etherscan.io/tx/0xe94dacaee15cf2645786ee4f64f790d40d15877dd2eb9db2bee1e1112cf26cfa
+- VoteNFT
+  - Address: 0x8c5d92123391206e17d21077e8a5de510a0be707
+  - NFT: https://sepolia.etherscan.io/token/0x8c5d92123391206e17d21077e8a5de510a0be707
+  - Deploy transaction: https://sepolia.etherscan.io/tx/0xe94dacaee15cf2645786ee4f64f790d40d15877dd2eb9db2bee1e1112cf26cfa
 
-### `yarn start`
+## Students
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [Rary Coringa](https://github.com/rarycoringa)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Teachers
 
-### `yarn test`
+- [Danilo Curvelo](https://github.com/danilocurvelo)
+- Leonardo Cabral
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Course
 
-### `yarn build`
+- IMD0913 - Blockchain e Aplicações Descentralizadas
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tecnologies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- React (front-end application)
+- Web3.js (JS library that connects with ethereum network)
+- Solidity (smart contracts applications)
+- SepoliaETH network (ethereum blockchain for testing)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
