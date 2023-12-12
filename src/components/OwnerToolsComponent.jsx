@@ -2,7 +2,7 @@ import { AddIcon, CheckIcon, CopyIcon, SpinnerIcon } from "@chakra-ui/icons";
 import { Button, ButtonGroup, Card, CardBody, CardFooter, CardHeader, Divider, Flex, Heading, Input, InputGroup, InputRightElement, Spacer, Stack, Text} from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 
-function OwnerToolsComponent({ contract, fromAddress, onStatus }) {
+function OwnerToolsComponent({ contract, fromAddress, changeStatus}) {
     const [voters, setVoters] = useState([]);
     const [candidates, setCandidates] = useState([]);
     
@@ -12,10 +12,10 @@ function OwnerToolsComponent({ contract, fromAddress, onStatus }) {
     const candidateAddressRef = useRef();
     const [addCandidateIsLoading, setAddCandidateIsLoading] = useState(false);
 
-    const [startVotingIsLoading, setStartVotingIsLoading] = useState(false)
-    const [finishVotingIsLoading, setFinishVotingIsLoading] = useState(false)
     const [isStarted, setStarted] = useState(false);
     const [isFinished, setFinished] = useState(false);
+    const [startVotingIsLoading, setStartVotingIsLoading] = useState(false)
+    const [finishVotingIsLoading, setFinishVotingIsLoading] = useState(false)
 
     const addVoter = async () => {
         setAddVoterIsLoading(true);
@@ -58,15 +58,23 @@ function OwnerToolsComponent({ contract, fromAddress, onStatus }) {
 
         console.log(`Candidates successfully retrieved: ${result}`);
     };
+
+    const retrieveStatus = async () => {
+        const started = await contract.methods.getVotingIsStarted().call();
+        const finished = await contract.methods.getVotingIsFinished().call();
+
+        setStarted(started);
+        setFinished(finished);
+
+        changeStatus(started, finished);
+    }
     
     const startVoting = async () => {
         setStartVotingIsLoading(true);
 
         const transaction = await contract.methods.startVotingProcess().send({"from": fromAddress});
 
-        await retrieveVotingStatus();
-
-        onStatus(isStarted, isFinished);
+        await retrieveStatus();
 
         setStartVotingIsLoading(false);
 
@@ -78,39 +86,19 @@ function OwnerToolsComponent({ contract, fromAddress, onStatus }) {
 
         const transaction = await contract.methods.finishVotingProcess().send({"from": fromAddress});
 
-        await retrieveVotingStatus();
-
-        onStatus(isStarted, isFinished);
+        await retrieveStatus();
 
         setFinishVotingIsLoading(false);
 
         console.log(`Voting process successfully finished by ${fromAddress} in transaction ${transaction}`);
     }
 
-    const retrieveVotingStatus = async () => {
-        setStartVotingIsLoading(true);
-        setFinishVotingIsLoading(true);
-
-        const startedAt = await contract.methods.getStartedAt().call();
-        const finishedAt = await contract.methods.getFinishedAt().call();
-
-        setStarted(startedAt !== 0n);
-        setFinished(finishedAt !== 0n);
-
-        onStatus(isStarted, isFinished);
-
-        setStartVotingIsLoading(false);
-        setFinishVotingIsLoading(false);
-
-        console.log(`Voting status successfully retrieved with startedAt = ${startedAt} and finishedAt = ${finishedAt}`);
-    }
-
-    useEffect(() => {
+    useEffect( () => {
             retrieveVoters();
             retrieveCandidates();
-            retrieveVotingStatus();
+            retrieveStatus();
         },
-        []
+        [isStarted, isFinished]
     );
 
     return (

@@ -24,3 +24,5 @@ yarn-error.log*
 
 # nodenv
 .node-version
+
+addresses.txt

@@ -1,5 +1,5 @@
 import { Box, Divider, Flex, Heading, Progress, Skeleton, Spacer, Spinner, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MetaMaskConnectorComponent from "./components/MetaMaskConnectorComponent";
 import OwnerToolsComponent from "./components/OwnerToolsComponent";
 import VoteComponent from "./components/VoteComponent";
@@ -10,7 +10,7 @@ import votingDAppABI from "./contracts/VotingDAppABI.json";
 
 function VotingDApp() {
   const web3 = new Web3(window.ethereum);
-  const votingDAppAddress = "0x7e0eea1188593a7dfb38dfac410a95bac7d36330";
+  const votingDAppAddress = "0x055695240ddbdae548d566e994d44364928fed23";
   const votingDAppOwnerAddress = "0x12287320fd25d88abce37fb524b54ca49b573726";
 
   const votingDAppContract = new web3.eth.Contract(votingDAppABI, votingDAppAddress)
@@ -26,10 +26,10 @@ function VotingDApp() {
     setMetaMaskConnected(connection);
   };
 
-  const handleVotingStatus = (isStarted, isFinished) => {
-    setVotingStarted(isStarted);
-    setVotingFinished(isFinished);
-  }
+  const handleVotingStatus = (started, finished) => {
+    setVotingStarted(started);
+    setVotingFinished(finished);
+  };
 
   return (
     <Flex minWidth="max-content" minHeight="max-content" direction="column" mx="60">
@@ -42,31 +42,32 @@ function VotingDApp() {
           <MetaMaskConnectorComponent onConnect={handleMetaMaskConnection} />
         </Box>
       </Flex>
-      
+
       <Divider />
 
       {
         isMetaMaskConnected ? (
-          <Flex minWidth="max-content" alignItems="center" my="5" direction="column">
+          <Flex minWidth="max-content" alignItems="center" my="5" direction="column" gap="15">
             <VotingResultComponent
               contract={votingDAppContract}
-              isStarted={isVotingStarted}
-              isFinished={isVotingFinished}
+              changeStatus={handleVotingStatus}
             />
+
+            <Divider />
+
             {
               walletAddress === votingDAppOwnerAddress ? (
                 <OwnerToolsComponent
                   contract={votingDAppContract}
                   fromAddress={walletAddress}
-                  onStatus={handleVotingStatus}
+                  changeStatus={handleVotingStatus}
                 />
               ) : (
                 <VoteComponent />
               )
             }
           </Flex>
-        ) : 
-        (
+        ) : (
           <Flex minWidth="max-content" alignItems="center" my="350" direction="column">
             {/* <Progress size='lg' isIndeterminate /> */}
             <Spinner color="gray" size="xl"/>
