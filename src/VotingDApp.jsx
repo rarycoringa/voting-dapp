@@ -10,7 +10,7 @@ import votingDAppABI from "./contracts/VotingDAppABI.json";
 
 function VotingDApp() {
   const web3 = new Web3(window.ethereum);
-  const votingDAppAddress = "0x055695240ddbdae548d566e994d44364928fed23";
+  const votingDAppAddress = "0x66a14956a487f905942bbd3957d824bc0d26af7b";
   const votingDAppOwnerAddress = "0x12287320fd25d88abce37fb524b54ca49b573726";
 
   const votingDAppContract = new web3.eth.Contract(votingDAppABI, votingDAppAddress)
@@ -48,13 +48,6 @@ function VotingDApp() {
       {
         isMetaMaskConnected ? (
           <Flex minWidth="max-content" alignItems="center" my="5" direction="column" gap="15">
-            <VotingResultComponent
-              contract={votingDAppContract}
-              changeStatus={handleVotingStatus}
-            />
-
-            <Divider />
-
             {
               walletAddress === votingDAppOwnerAddress ? (
                 <OwnerToolsComponent
@@ -63,9 +56,22 @@ function VotingDApp() {
                   changeStatus={handleVotingStatus}
                 />
               ) : (
-                <VoteComponent />
+                <VoteComponent
+                  contract={votingDAppContract}
+                  fromAddress={walletAddress}
+                  changeStatus={handleVotingStatus}
+                />
               )
             }
+
+            <Divider />
+
+            <VotingResultComponent
+              contract={votingDAppContract}
+              changeStatus={handleVotingStatus}
+            />
+
+            
           </Flex>
         ) : (
           <Flex minWidth="max-content" alignItems="center" my="350" direction="column">

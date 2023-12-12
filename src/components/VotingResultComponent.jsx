@@ -54,14 +54,13 @@ function VotingResultComponent({ contract, changeStatus }) {
             await retrieveFinalResult();
             console.log(`BBBBBBBBB ${votes} ${isStarted} ${isFinished}`)
         }
-
     }
 
     useEffect(() => {
         retrieveStatus();
         retrieveResult();
         },
-        [isStarted, isFinished]
+        [isStarted, isFinished, candidates, votes, votesSum]
     )
 
     return (
