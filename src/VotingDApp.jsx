@@ -10,7 +10,7 @@ import votingDAppABI from "./contracts/VotingDAppABI.json";
 
 function VotingDApp() {
   const web3 = new Web3(window.ethereum);
-  const votingDAppAddress = "0x66a14956a487f905942bbd3957d824bc0d26af7b";
+  const votingDAppAddress = "0x2bac136c8ad994c9aff906c4dfce459c999f6ab7";
   const votingDAppOwnerAddress = "0x12287320fd25d88abce37fb524b54ca49b573726";
 
   const votingDAppContract = new web3.eth.Contract(votingDAppABI, votingDAppAddress)
