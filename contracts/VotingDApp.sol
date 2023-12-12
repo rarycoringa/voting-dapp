@@ -9,13 +9,19 @@ interface VotingDAppInterface {
     
     function registerVoter(address _voter) external;
 
+    function getVoters() external returns (address[] memory);
+
     function startVotingProcess() external;
+
+    function getStartedAt() external returns (uint);
 
     function vote(address _candidate) external returns (uint);
 
     function getPartialResult() external returns (address[] memory, uint[] memory);
 
     function finishVotingProcess() external;
+
+    function getFinishedAt() external returns (uint);
 
     function getFinalResult() external returns (address[] memory, uint[] memory);
 
@@ -112,8 +118,16 @@ contract VotingDApp is VotingDAppInterface {
         _voters.push(_voter);
     }
 
+    function getVoters() public view returns (address[] memory) {
+        return _voters;
+    }
+
     function startVotingProcess() public onlyOwner hasNotStarted {
         _startedAt = block.timestamp;
+    }
+
+    function getStartedAt() public view returns (uint) {
+        return _startedAt;
     }
 
     function vote(address _candidate) public hasStarted hasNotFinished isVoter(msg.sender) hasNotVoted(msg.sender) isCandidate(_candidate) returns (uint) {
@@ -144,6 +158,10 @@ contract VotingDApp is VotingDAppInterface {
 
     function finishVotingProcess() public onlyOwner hasStarted hasNotFinished {
         _finishedAt = block.timestamp;
+    }
+
+    function getFinishedAt() public view returns (uint) {
+        return _finishedAt;
     }
 
     function getFinalResult() public view hasFinished returns (address[] memory, uint[] memory) {
